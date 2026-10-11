@@ -1,0 +1,6 @@
+{
+  "name": "Bikin Video - AI Short Video Generator",
+  "description": "Generate unlimited short videos at once with automatic captions, effects, backgrounds, and music using Bikin Video AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

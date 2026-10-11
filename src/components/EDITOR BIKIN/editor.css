@@ -1,0 +1,277 @@
+/* =========================================================================
+   BIKIN VIDEO EDITOR — STANDALONE STYLESHEET
+   Professional Dark NLE Studio Theme matching Bikin AI Video Editor
+   ========================================================================= */
+
+@charset "UTF-8";
+
+:root {
+  --bikin-bg-darkest: #07080f;
+  --bikin-bg-dark: #0a0c16;
+  --bikin-bg-panel: #0e1120;
+  --bikin-bg-panel-elevated: #14172a;
+  --bikin-bg-card: #191c32;
+  --bikin-border-subtle: rgba(255, 255, 255, 0.07);
+  --bikin-border-medium: rgba(255, 255, 255, 0.12);
+  --bikin-border-purple: rgba(139, 53, 232, 0.45);
+  
+  --bikin-purple-primary: #8b35e8;
+  --bikin-purple-hover: #9d4cf6;
+  --bikin-purple-glow: rgba(139, 53, 232, 0.35);
+  --bikin-purple-light: #c084fc;
+  
+  --bikin-orange-subtitle: #c2410c;
+  --bikin-orange-subtitle-border: #ea580c;
+  
+  --bikin-emerald: #10b981;
+  --bikin-emerald-glow: rgba(16, 185, 129, 0.3);
+  
+  --bikin-text-main: #f1f2f8;
+  --bikin-text-muted: #8e91a6;
+  --bikin-text-dim: #606377;
+}
+
+/* Custom Sleek Scrollbar */
+.bikin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.bikin-scrollbar::-webkit-scrollbar-track {
+  background: rgba(10, 12, 22, 0.8);
+}
+.bikin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.bikin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 53, 232, 0.5);
+}
+
+/* Base Editor Viewport Container */
+.bikin-editor-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
+  background-color: var(--bikin-bg-darkest);
+  color: var(--bikin-text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Top Bar */
+.bikin-topbar {
+  height: 44px;
+  background-color: #0c0e1a;
+  border-bottom: 1px solid var(--bikin-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 12px;
+  flex-shrink: 0;
+  z-index: 30;
+}
+
+/* Activity Bar (Far Left) */
+.bikin-activity-bar {
+  width: 52px;
+  background-color: #0a0c16;
+  border-right: 1px solid var(--bikin-border-subtle);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.bikin-activity-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 48px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #7b7e93;
+  font-size: 9px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bikin-activity-btn:hover {
+  color: #e2e4ef;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.bikin-activity-btn.active {
+  color: #d8b4fe;
+  background: rgba(139, 53, 232, 0.18);
+  border-color: rgba(139, 53, 232, 0.4);
+  box-shadow: 0 0 12px rgba(139, 53, 232, 0.25);
+}
+
+/* Panel 1: Media Library */
+.bikin-media-panel {
+  width: 250px;
+  background-color: #0e101d;
+  border-right: 1px solid var(--bikin-border-subtle);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+/* Panel 2: Center Preview Player */
+.bikin-preview-panel {
+  flex: 1;
+  background-color: #070810;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid var(--bikin-border-subtle);
+}
+
+/* Panel 3: Right Inspector (Director/Clipper) */
+.bikin-inspector-panel {
+  width: 260px;
+  background-color: #0e101d;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+/* Panel 4: Multi-Track Timeline */
+.bikin-timeline-panel {
+  height: 320px;
+  background-color: #090b14;
+  border-top: 1px solid var(--bikin-border-subtle);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Timeline Playhead Diamond & Line */
+.bikin-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 50;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.bikin-playhead-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 14px;
+  background: #ffffff;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 65%, 50% 100%, 0% 65%);
+  cursor: ew-resize;
+  pointer-events: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtitle Pill on Track */
+.bikin-subtitle-pill {
+  background: linear-gradient(180deg, #b45309 0%, #9a3412 100%);
+  border: 1px solid rgba(234, 88, 12, 0.4);
+  color: #fff;
+  border-radius: 9999px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Motion Graphic Pill on Track */
+.bikin-motion-pill {
+  background: linear-gradient(180deg, #6b21a8 0%, #581c87 100%);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  border-radius: 6px;
+  color: #ffffff;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(107, 33, 168, 0.3);
+}
+
+/* Video Track Clip */
+.bikin-video-clip {
+  background-color: #121528;
+  border: 1px solid rgba(139, 53, 232, 0.35);
+  border-radius: 6px;
+  height: 52px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bikin-video-clip:hover {
+  border-color: rgba(168, 85, 247, 0.7);
+}
+
+/* Clip Trim Handles (White Dots) */
+.bikin-clip-handle {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  position: absolute;
+  bottom: 3px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+.bikin-clip-handle.left { left: 4px; }
+.bikin-clip-handle.right { right: 4px; }
+
+/* Floating AI Director Prompt Bar */
+.bikin-floating-prompt {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 480px;
+  max-width: 90%;
+  height: 46px;
+  border-radius: 9999px;
+  background: rgba(14, 17, 32, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  padding: 0 6px 0 18px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(139, 53, 232, 0.15);
+  z-index: 60;
+  transition: all 0.2s ease;
+}
+
+.bikin-floating-prompt:focus-within {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(139, 53, 232, 0.3);
+}

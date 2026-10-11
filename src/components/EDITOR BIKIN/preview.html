@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bikin Video - AI Video Editor (4 Panel Clone)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./editor.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #07080f;
+      color: #f1f2f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body class="bikin-editor-root">
+
+  <!-- 1. TOP BAR -->
+  <header class="bikin-topbar">
+    <!-- Left: Menu, History & Version -->
+    <div class="flex items-center gap-2">
+      <button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#16182c] hover:bg-[#1f223d] text-zinc-200 font-semibold text-xs border border-white/10 transition-colors">
+        <span>Menu</span>
+        <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+
+      <div class="flex items-center gap-1 text-zinc-400 ml-1">
+        <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white hover:bg-white/5 transition-colors">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+        </button>
+        <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white hover:bg-white/5 transition-colors">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#1e1738] border border-purple-500/30 text-purple-300 text-[11px] font-mono font-medium">
+        <svg class="w-3 h-3 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>v1</span>
+      </div>
+    </div>
+
+    <!-- Center: Bikin Video Logo -->
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 font-bold tracking-tight">
+        <div class="w-5 h-5 rounded-md bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center text-white text-[11px] font-black shadow-sm shadow-purple-500/50">
+          ▶
+        </div>
+        <span class="text-white text-sm font-black tracking-tight">Bikin</span>
+      </div>
+      <span class="text-zinc-400 text-xs font-medium">Bikin Video</span>
+    </div>
+
+    <!-- Right: AutoSave & Actions -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <span class="text-zinc-400 text-xs font-medium">AutoSave</span>
+        <button class="w-9 h-5 rounded-full bg-purple-600 flex items-center px-0.5 transition-colors cursor-pointer">
+          <div class="w-4 h-4 rounded-full bg-white ml-auto shadow-sm"></div>
+        </button>
+      </div>
+
+      <button class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 transition-colors">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+      </button>
+
+      <button class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-white font-medium text-xs border border-white/10 transition-colors">
+        Share
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. WORKSPACE PANELS -->
+  <div class="flex-1 flex overflow-hidden relative">
+    
+    <!-- ACTIVITY BAR (Far Left) -->
+    <aside class="bikin-activity-bar">
+      <button class="bikin-activity-btn active">
+        <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 8 6 4-6 4Z"/></svg>
+        <span>Media</span>
+      </button>
+      <button class="bikin-activity-btn">
+        <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>AI Core</span>
+      </button>
+      <button class="bikin-activity-btn">
+        <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span>Motion</span>
+      </button>
+      <button class="bikin-activity-btn">
+        <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
+        <span>Text</span>
+      </button>
+      <button class="bikin-activity-btn">
+        <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Captions</span>
+      </button>
+    </aside>
+
+    <!-- PANEL 1: MEDIA LIBRARY -->
+    <section class="bikin-media-panel p-3">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-bold text-white tracking-tight">Media</h2>
+        <div class="flex items-center gap-1 text-[#8E91A6]">
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white hover:bg-white/5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          </button>
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white hover:bg-white/5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative mb-3">
+        <svg class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#717488]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search media with AI..." class="w-full bg-[#131628] border border-white/[0.08] rounded-lg py-1.5 pl-8 pr-3 text-xs text-zinc-200 placeholder-[#63667c] focus:outline-none focus:border-purple-500/50">
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center gap-1.5 mb-3 overflow-x-auto pb-1">
+        <button class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-purple-600 text-white shadow-sm shadow-purple-900/50">Media</button>
+        <button class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#16182c] text-zinc-400 hover:text-zinc-200">Library</button>
+        <button class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#16182c] text-zinc-400 hover:text-zinc-200">Pixabay</button>
+      </div>
+
+      <!-- Import Dropzone Card -->
+      <div class="w-full border-2 border-dashed border-purple-500/30 hover:border-purple-500/60 rounded-xl bg-purple-950/10 hover:bg-purple-950/20 p-4 flex flex-col items-center justify-center gap-1.5 text-center cursor-pointer transition-all mb-4 group">
+        <div class="w-9 h-9 rounded-full bg-purple-600/20 text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+        </div>
+        <span class="text-xs font-bold text-zinc-200">Import</span>
+        <span class="text-[10px] text-zinc-500">Videos, audio, images</span>
+      </div>
+
+      <!-- Imported Media Item Card: "Dipahami AI 0:58" -->
+      <div class="relative rounded-lg overflow-hidden border border-white/10 bg-[#14162a] group cursor-pointer hover:border-purple-500/50 transition-all shadow-md">
+        <div class="relative aspect-video w-full bg-black/60 overflow-hidden flex items-center justify-center">
+          <!-- Presenter Vector Thumbnail -->
+          <svg class="w-full h-full" viewBox="0 0 320 180">
+            <rect width="320" height="180" fill="#12131e"/>
+            <circle cx="160" cy="80" r="32" fill="#d97706" opacity="0.8"/>
+            <path d="M120 180 C120 120, 200 120, 200 180 Z" fill="#1e2030"/>
+            <rect x="230" y="90" width="35" height="50" rx="3" fill="#0284c7" opacity="0.8"/>
+          </svg>
+
+          <!-- Dipahami AI Badge -->
+          <div class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-sm border border-white/10 text-[9px] font-semibold text-purple-300">
+            Dipahami AI
+          </div>
+
+          <!-- Duration Badge -->
+          <div class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-sm text-[9px] font-mono text-zinc-300">
+            0:58
+          </div>
+        </div>
+        <div class="p-2 flex items-center justify-between text-xs">
+          <span class="font-medium text-zinc-200 truncate">Dipahami AI</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 2: CENTER PREVIEW PLAYER -->
+    <section class="bikin-preview-panel">
+      <!-- Player Header Tabs -->
+      <div class="h-11 px-3 border-b border-white/[0.07] bg-[#090b16] flex items-center justify-between shrink-0 z-20">
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#16192d] hover:bg-[#1d223c] text-white text-xs font-semibold border border-white/10">
+            <span>Bikin-Studio-1</span>
+            <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <button class="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-zinc-400 hover:text-white hover:bg-white/5 text-xs font-medium">
+            <svg class="w-3.5 h-3.5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            <span>Workflow</span>
+          </button>
+          <button class="w-6 h-6 rounded flex items-center justify-center text-zinc-400 hover:text-white text-sm">+</button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white text-xs font-semibold shadow-md shadow-purple-900/40">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg>
+            <span>Video Clipping</span>
+          </button>
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-[11px] text-zinc-300 font-medium">
+            <span class="text-purple-400 font-bold">✦</span>
+            <span>AI EDITING</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presenter Canvas Viewport -->
+      <div class="flex-1 relative flex items-center justify-center p-3 bg-[#06070e] overflow-hidden">
+        <div class="relative w-full max-w-[640px] aspect-video rounded-lg overflow-hidden border border-white/[0.08] shadow-2xl bg-black">
+          
+          <!-- Vector Studio Canvas -->
+          <svg viewBox="0 0 960 540" class="w-full h-full object-cover">
+            <defs>
+              <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3d2a1d"/>
+                <stop offset="50%" stop-color="#2a1d17"/>
+                <stop offset="100%" stop-color="#140f0c"/>
+              </linearGradient>
+              <linearGradient id="wallSlat" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2c1810"/>
+                <stop offset="50%" stop-color="#4a2a1b"/>
+                <stop offset="100%" stop-color="#1e100b"/>
+              </linearGradient>
+              <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.8"/>
+                <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="960" height="540" fill="url(#bgGrad)"/>
+            <!-- Wooden wall panels -->
+            <rect x="0" y="0" width="120" height="540" fill="url(#wallSlat)"/>
+            <rect x="130" y="0" width="120" height="540" fill="url(#wallSlat)"/>
+            <rect x="260" y="0" width="120" height="540" fill="url(#wallSlat)"/>
+
+            <!-- Warm Lamp Ambient Glow -->
+            <circle cx="210" cy="300" r="140" fill="url(#lampGlow)"/>
+            <circle cx="580" cy="320" r="100" fill="url(#lampGlow)" opacity="0.6"/>
+
+            <!-- Desk Lamp -->
+            <path d="M570 340 Q580 290 560 270 Q550 255 570 250" stroke="#0f172a" stroke-width="6" fill="none"/>
+            <ellipse cx="580" cy="255" rx="20" ry="14" fill="#0f172a"/>
+            <polygon points="570,265 600,265 620,330 550,330" fill="#fbbf24" opacity="0.15"/>
+
+            <!-- Book: livin' -->
+            <rect x="630" y="300" width="70" height="90" rx="4" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+            <text x="665" y="345" fill="#ffffff" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle">livin'</text>
+
+            <!-- Presenter Figure (Asian Male with Glasses & Black Shirt) -->
+            <ellipse cx="480" cy="205" rx="55" ry="70" fill="#e2a172"/>
+            <path d="M430 190 Q480 135 530 190 Z" fill="#1c1917"/>
+            <circle cx="460" cy="205" r="13" fill="none" stroke="#000" stroke-width="3"/>
+            <circle cx="500" cy="205" r="13" fill="none" stroke="#000" stroke-width="3"/>
+            <line x1="473" y1="205" x2="487" y2="205" stroke="#000" stroke-width="3"/>
+            <path d="M465 240 Q480 250 495 240" stroke="#78350f" stroke-width="3" fill="none"/>
+            <path d="M480 270 L480 320" stroke="#cbd5e1" stroke-width="3"/>
+            <!-- Black Collared Shirt Body -->
+            <path d="M370 540 C370 330 420 290 480 290 C540 290 590 330 590 540 Z" fill="#18181b"/>
+          </svg>
+
+          <!-- Overlay Top-Left: "3 layers" -->
+          <div class="absolute top-4 left-4 flex items-center gap-1.5 px-2.5 py-1 rounded bg-black/60 backdrop-blur-md border border-white/10 text-xs text-zinc-300 font-medium">
+            <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/></svg>
+            <span>3 layers</span>
+          </div>
+
+          <!-- Overlay Subtitle: "and then to the customer." -->
+          <div class="absolute bottom-8 left-0 right-0 flex justify-center pointer-events-none">
+            <div class="px-3 py-1 rounded bg-black/50 backdrop-blur-sm text-sm font-bold tracking-wide">
+              <span class="text-amber-300">and then </span>
+              <span class="text-white">to the customer.</span>
+            </div>
+          </div>
+
+          <!-- Bottom Right Floating Video Badge -->
+          <div class="absolute right-3 bottom-3 px-2 py-0.5 rounded bg-black/60 border border-white/10 backdrop-blur-sm flex items-center gap-1 text-[10px] text-zinc-300 font-medium pointer-events-none">
+            <span>▶ Video</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player Controls Bar -->
+      <div class="h-10 px-4 bg-[#090b16] border-t border-white/[0.07] flex items-center justify-between shrink-0 z-20">
+        <div class="flex items-center gap-3 font-mono text-xs font-bold tracking-wider">
+          <span class="text-[#a855f7]">00:00:27:00</span>
+          <span class="text-zinc-500">/</span>
+          <span class="text-zinc-400">00:00:36:09</span>
+        </div>
+
+        <button class="w-7 h-7 rounded-full flex items-center justify-center text-white hover:text-purple-300 cursor-pointer">
+          <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </button>
+
+        <div class="flex items-center gap-3">
+          <span class="px-2 py-0.5 rounded bg-white/5 text-[11px] font-mono text-zinc-300">16:9</span>
+          <svg class="w-3.5 h-3.5 text-zinc-400 hover:text-white cursor-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 3: RIGHT INSPECTOR -->
+    <aside class="bikin-inspector-panel p-3 flex flex-col justify-between">
+      <div>
+        <div class="mb-3">
+          <button class="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Back to Text</span>
+          </button>
+        </div>
+
+        <div class="flex items-center border-b border-white/[0.08] mb-4">
+          <button class="flex items-center gap-1.5 pb-2.5 px-2 text-xs font-bold text-purple-300 border-b-2 border-purple-500">
+            <svg class="w-3.5 h-3.5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            <span>Director</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block ml-0.5"></span>
+          </button>
+          <button class="flex items-center gap-1.5 pb-2.5 px-3 text-xs font-bold text-zinc-400 hover:text-zinc-200">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" x2="8.12" y1="4" y2="15.88"/><line x1="14.47" x2="20" y1="14.48" y2="20"/><line x1="8.12" x2="12" y1="8.12" y2="12"/></svg>
+            <span>Clipper</span>
+          </button>
+        </div>
+
+        <div class="space-y-3.5">
+          <div class="flex items-start gap-2.5 text-xs">
+            <svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span class="text-zinc-300 font-medium">Timeline · 2 editing tools</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-xs">
+            <svg class="w-4 h-4 text-purple-400 shrink-0 mt-0.5 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <span class="text-zinc-300 font-medium">Understanding request...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-white/[0.06]">
+        <div class="flex items-center gap-2">
+          <button class="flex-1 py-1.5 px-3 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>
+            <span>Pause</span>
+          </button>
+          <button class="flex-1 py-1.5 px-3 rounded-lg border border-red-500/40 bg-red-500/10 hover:bg-red-500/20 text-red-300 text-xs font-bold flex items-center justify-center gap-1.5">
+            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+            <span>Stop</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 3. PANEL 4: MULTI-TRACK TIMELINE -->
+  <div class="relative">
+    <section class="bikin-timeline-panel flex flex-col">
+      <!-- Toolbar -->
+      <div class="h-9 px-3 bg-[#0d0f1b] border-b border-white/[0.07] flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-1.5 text-zinc-400">
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white">+</button>
+          <button class="w-6 h-6 rounded flex items-center justify-center text-white bg-white/10">➤</button>
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white">][</button>
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-red-400">🗑</button>
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white">🔖</button>
+        </div>
+        <div class="flex items-center gap-1 text-zinc-400">
+          <button class="w-6 h-6 rounded flex items-center justify-center hover:text-white">🎙</button>
+          <button class="px-2 h-6 rounded bg-[#201c38] text-purple-300 border border-purple-500/30 text-xs font-semibold">⟷</button>
+          <button class="w-6 h-6 rounded bg-purple-600/30 text-purple-300 border border-purple-500/40 text-xs">✦</button>
+        </div>
+      </div>
+
+      <!-- Tracks Container -->
+      <div class="flex-1 flex overflow-hidden relative">
+        <!-- Headers -->
+        <div class="w-36 bg-[#090b16] border-r border-white/[0.07] flex flex-col shrink-0 select-none z-30">
+          <div class="h-6 border-b border-white/[0.07] bg-[#0c0e1a] flex items-center justify-end px-2 text-[10px] text-zinc-600">+</div>
+          
+          <!-- Subtitle Header -->
+          <div class="h-8 border-b border-white/[0.05] px-2 flex items-center justify-between text-zinc-400">
+            <span class="font-bold text-orange-400 text-xs">TT</span>
+            <span class="text-[10px] text-zinc-500">🔒 👁 •••</span>
+          </div>
+
+          <!-- Motion Header -->
+          <div class="h-10 border-b border-white/[0.05] px-2 flex items-center justify-between text-zinc-400">
+            <span class="text-purple-400 text-xs">🎥</span>
+            <span class="text-[10px] text-zinc-500">🔒 👁 •••</span>
+          </div>
+
+          <!-- Video Header -->
+          <div class="h-16 border-b border-white/[0.05] px-2 flex items-center justify-between text-zinc-400">
+            <span class="text-purple-400 text-xs">🎥</span>
+            <button class="px-1.5 py-0.5 rounded bg-white/5 text-[9px] text-zinc-300 border border-white/10">✏ Cover</button>
+          </div>
+
+          <!-- Audio 1 Header -->
+          <div class="h-10 border-b border-white/[0.05] px-2 flex items-center justify-between text-zinc-400">
+            <span class="text-indigo-400 text-xs">🎵</span>
+            <span class="text-[10px] text-zinc-500">🔒 🔊 •••</span>
+          </div>
+
+          <!-- Audio 2 Header -->
+          <div class="h-10 border-b border-white/[0.05] px-2 flex items-center justify-between text-zinc-400">
+            <span class="text-indigo-400 text-xs">🎵</span>
+            <span class="text-[10px] text-zinc-500">🔒 🔊 •••</span>
+          </div>
+        </div>
+
+        <!-- Scrollable Tracks Canvas -->
+        <div class="flex-1 overflow-x-auto relative bikin-scrollbar bg-[#080912]">
+          <div class="min-w-[1000px] h-full relative">
+            
+            <!-- Playhead -->
+            <div class="bikin-playhead" style="left: 780px;">
+              <div class="bikin-playhead-head"></div>
+            </div>
+
+            <!-- Ruler -->
+            <div class="h-6 border-b border-white/[0.07] bg-[#0c0e1a] relative flex items-center text-[10px] text-zinc-400 font-mono select-none">
+              <span class="absolute" style="left: 20px;">00:00</span>
+              <span class="absolute" style="left: 120px;">00:05</span>
+              <span class="absolute" style="left: 220px;">00:10</span>
+              <span class="absolute" style="left: 320px;">00:15</span>
+              <span class="absolute" style="left: 420px;">00:20</span>
+              <span class="absolute" style="left: 520px;">00:25</span>
+              <span class="absolute" style="left: 620px;">00:30</span>
+              <span class="absolute" style="left: 720px;">00:35</span>
+            </div>
+
+            <!-- Subtitle Track Pills -->
+            <div class="h-8 border-b border-white/[0.04] relative flex items-center">
+              <div class="bikin-subtitle-pill absolute" style="left: 20px; width: 38px;">Hi e...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 62px; width: 42px;">Farr...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 108px; width: 28px;">T..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 140px; width: 28px;">b..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 172px; width: 30px;">O..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 206px; width: 36px;">20...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 246px; width: 32px;">a...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 282px; width: 48px;">First...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 334px; width: 44px;">Sec...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 382px; width: 46px;">Thir...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 432px; width: 30px;">W..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 466px; width: 28px;">p..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 498px; width: 28px;">E..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 530px; width: 28px;">v..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 562px; width: 28px;">a..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 594px; width: 30px;">T..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 628px; width: 38px;">ac...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 670px; width: 28px;">r..</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 702px; width: 42px;">So...</div>
+              <div class="bikin-subtitle-pill absolute" style="left: 748px; width: 28px;">f..</div>
+            </div>
+
+            <!-- Motion Track -->
+            <div class="h-10 border-b border-white/[0.04] relative flex items-center">
+              <div class="bikin-motion-pill absolute" style="left: 62px; width: 104px;">
+                <span>Motion...</span>
+                <span class="px-1 py-0.2 rounded bg-purple-400/20 text-[9px] text-purple-200 border border-purple-300/30">AI</span>
+              </div>
+            </div>
+
+            <!-- Video Track (Split Clips) -->
+            <div class="h-16 border-b border-white/[0.04] relative flex items-center py-1">
+              <div class="bikin-video-clip absolute" style="left: 20px; width: 50px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:...</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 74px; width: 36px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 114px; width: 64px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:03:18</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 182px; width: 66px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:03:12</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 252px; width: 38px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:...</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 294px; width: 38px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:0</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 336px; width: 38px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:...</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 378px; width: 46px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:03</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 428px; width: 62px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:03:04</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 494px; width: 68px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:04:04</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 576px; width: 64px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:03:22</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+              <div class="bikin-video-clip absolute" style="left: 644px; width: 70px;">
+                <div class="px-1 py-0.5 bg-black/60 text-[9px] font-mono text-zinc-200">00:00:04:07</div>
+                <div class="bikin-clip-handle left"></div><div class="bikin-clip-handle right"></div>
+              </div>
+            </div>
+
+            <!-- Audio Track 1 -->
+            <div class="h-10 border-b border-white/[0.04] relative flex items-center">
+              <div class="absolute px-2 py-1 rounded bg-[#201d3f] border border-purple-500/30 text-purple-300 text-xs" style="left: 60px;">
+                🎵
+              </div>
+              <div class="absolute left-[450px] text-[11px] text-zinc-600 font-medium">
+                Drop media here
+              </div>
+            </div>
+
+            <!-- Audio Track 2 -->
+            <div class="h-10 border-b border-white/[0.04] relative flex items-center">
+              <div class="absolute px-2 py-1 rounded bg-[#171a32] border border-white/10 text-zinc-400 text-xs" style="left: 60px;">
+                🎵
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating AI Prompt Bar -->
+    <div class="bikin-floating-prompt">
+      <input type="text" placeholder="Describe your edit..." class="flex-1 bg-transparent text-sm text-zinc-100 placeholder-[#7a7d95] focus:outline-none pr-3">
+      <button class="w-8 h-8 rounded-full bg-[#e11d48] text-white flex items-center justify-center shadow-md">
+        <div class="w-3.5 h-3.5 bg-white rounded-sm"></div>
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>
